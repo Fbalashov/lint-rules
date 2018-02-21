@@ -18,7 +18,7 @@ import java.util.EnumSet
 val ISSUE_RAW_SCHEDULER_CALL = Issue.create("RxJava2SchedulersFactoryCall",
     "Instead of calling the Schedulers factory methods directly inject the Schedulers.",
     "Injecting the Schedulers instead of accessing them via the factory methods has the benefit that unit testing is way easier. Instead of overriding them via the Plugin mechanism we can just pass a custom Scheduler.",
-    CORRECTNESS, 8, WARNING,
+    CORRECTNESS, PRIORITY, WARNING,
     Implementation(RxJava2SchedulersFactoryCallDetector::class.java, EnumSet.of(JAVA_FILE, TEST_SOURCES)))
 
 private val SCHEDULERS_METHODS = listOf("io", "computation", "newThread", "single", "from")
@@ -46,7 +46,7 @@ class RxJava2SchedulersFactoryCallDetector : Detector(), UastScanner {
   private fun UElement.isCalledFromProvidesMethod(context: JavaContext): Boolean {
     if (this is UMethod) {
       return context.evaluator.getAllAnnotations(psi, false)
-        .any { "dagger.Provides" == it.qualifiedName }
+          .any { "dagger.Provides" == it.qualifiedName }
     }
 
     return uastParent?.isCalledFromProvidesMethod(context) ?: false

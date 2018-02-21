@@ -32,7 +32,7 @@ class IssueRegistryTest {
     assertEquals("""
         |- **ConstraintLayoutToolsEditorAttribute** - The tools:layout_editor xml properties are only used for previewing and won't be used in your APK hence they're unnecessary and just add overhead.
         |- **DefaultLayoutAttribute** - Flags default layout values that are not needed. One for instance is the textStyle="normal" that can be just removed.
-        |- **InvalidImport** - Flags invalid imports. One example is com.foo.bar.R.drawable. Instead just the generated class R should be imported and not R.drawable.
+        |- **InvalidImport** - Flags invalid imports. One example is com.foo.bar.R.drawable. Instead just the generated class R should be imported and not R.drawable. Also you should never import anything that's in an internal package.
         |- **InvalidSingleLineComment** - Single line comments should always be sentences. They're part of the code and hence they deserve as much detail and respect as code.
         |- **InvalidString** - A translation string is invalid if it contains new lines instead of the escaped \
         | or if it contains trailing whitespace.
@@ -56,7 +56,7 @@ class IssueRegistryTest {
         |- **WrongMenuIdFormat** - Menu ids should be in lowerCamelCase format. This has the benefit of saving an unnecessary underscore and also just looks nicer.
         |- **WrongTestMethodName** - The @Test annotation already states that this ia test hence the test prefix is not necessary.
         |- **WrongViewIdFormat** - View ids should be in lowerCamelCase format. This has the benefit of saving an unnecessary underscore and also just looks nicer.
-        |- **XmlSpacing** - Having newlines in xml files just adds noise and should be avoided.
+        |- **XmlSpacing** - Having newlines in xml files just adds noise and should be avoided. The only exception is the new lint at the end of the file.
         """.trimMargin(), output)
   }
 }

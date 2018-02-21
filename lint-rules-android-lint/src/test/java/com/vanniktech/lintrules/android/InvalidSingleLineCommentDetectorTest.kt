@@ -1,5 +1,6 @@
 package com.vanniktech.lintrules.android
 
+import com.android.tools.lint.checks.infrastructure.TestFiles.gradle
 import com.android.tools.lint.checks.infrastructure.TestFiles.java
 import com.android.tools.lint.checks.infrastructure.TestLintTask.lint
 import com.vanniktech.lintrules.android.InvalidSingleLineCommentDetector.ISSUE_INVALID_SINGLE_LINE_COMMENT
@@ -8,7 +9,7 @@ import org.junit.Test
 class InvalidSingleLineCommentDetectorTest {
   @Test fun invalidSingleLineCommentNoSpace() {
     lint()
-      .files(java("""
+        .files(java("""
           |package foo;
           |import android.content.res.Resources;
           |class Example {
@@ -16,14 +17,14 @@ class InvalidSingleLineCommentDetectorTest {
           |    //Something.
           |  }
           |}""".trimMargin()))
-      .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
-      .run()
-      .expect("""
+        .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
+        .run()
+        .expect("""
           |src/foo/Example.java:5: Warning: Comment does not contain a space at the beginning. [InvalidSingleLineComment]
           |    //Something.
           |    ~~~
           |0 errors, 1 warnings""".trimMargin())
-      .expectFixDiffs("""
+        .expectFixDiffs("""
           |Fix for src/foo/Example.java line 4: Add space:
           |@@ -5 +5
           |-     //Something.
@@ -33,7 +34,7 @@ class InvalidSingleLineCommentDetectorTest {
 
   @Test fun invalidSingleLineCommentNotStartingCapitalLetter() {
     lint()
-      .files(java("""
+        .files(java("""
           |package foo;
           |import android.content.res.Resources;
           |class Example {
@@ -41,14 +42,14 @@ class InvalidSingleLineCommentDetectorTest {
           |    // something.
           |  }
           |}""".trimMargin()))
-      .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
-      .run()
-      .expect("""
+        .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
+        .run()
+        .expect("""
           |src/foo/Example.java:5: Warning: Comments first word should be capitalized. [InvalidSingleLineComment]
           |    // something.
           |       ^
           |0 errors, 1 warnings""".trimMargin())
-      .expectFixDiffs("""
+        .expectFixDiffs("""
           |Fix for src/foo/Example.java line 4: Capitalized first word:
           |@@ -5 +5
           |-     // something.
@@ -58,7 +59,7 @@ class InvalidSingleLineCommentDetectorTest {
 
   @Test fun invalidSingleLineCommentNoPeriodAtEnd() {
     lint()
-      .files(java("""
+        .files(java("""
           |package foo;
           |import android.content.res.Resources;
           |class Example {
@@ -66,14 +67,14 @@ class InvalidSingleLineCommentDetectorTest {
           |    // Something
           |  }
           |}""".trimMargin()))
-      .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
-      .run()
-      .expect("""
+        .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
+        .run()
+        .expect("""
           |src/foo/Example.java:5: Warning: Comment does not end with a period. [InvalidSingleLineComment]
           |    // Something
           |    ~~~~~~~~~~~~
           |0 errors, 1 warnings""".trimMargin())
-      .expectFixDiffs("""
+        .expectFixDiffs("""
           |Fix for src/foo/Example.java line 4: Add period:
           |@@ -5 +5
           |-     // Something
@@ -83,7 +84,7 @@ class InvalidSingleLineCommentDetectorTest {
 
   @Test fun validSingleLineCommentEndingWithPeriod() {
     lint()
-      .files(java("""
+        .files(java("""
           |package foo;
           |import android.content.res.Resources;
           |class Example {
@@ -94,14 +95,14 @@ class InvalidSingleLineCommentDetectorTest {
           |    // Something. (Do not modify)
           |  }
           |}""".trimMargin()))
-      .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
-      .run()
-      .expectClean()
+        .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
+        .run()
+        .expectClean()
   }
 
   @Test fun invalidSingleLineCommentNoSpaceBefore() {
     lint()
-      .files(java("""
+        .files(java("""
           |package foo;
           |import android.content.res.Resources;
           |class Example {
@@ -109,14 +110,14 @@ class InvalidSingleLineCommentDetectorTest {
           |    int foo = 5 + 5;// Something.
           |  }
           |}""".trimMargin()))
-      .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
-      .run()
-      .expect("""
+        .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
+        .run()
+        .expect("""
           |src/foo/Example.java:5: Warning: Comment declaration is not preceded by a single space. [InvalidSingleLineComment]
           |    int foo = 5 + 5;// Something.
           |                   ~~~
           |0 errors, 1 warnings""".trimMargin())
-      .expectFixDiffs("""
+        .expectFixDiffs("""
           |Fix for src/foo/Example.java line 4: Add space:
           |@@ -5 +5
           |-     int foo = 5 + 5;// Something.
@@ -126,7 +127,7 @@ class InvalidSingleLineCommentDetectorTest {
 
   @Test fun invalidSingleLineCommentIgnoresLinks() {
     lint()
-      .files(java("""
+        .files(java("""
           |package foo;
           |import android.content.res.Resources;
           |class Example {
@@ -136,14 +137,14 @@ class InvalidSingleLineCommentDetectorTest {
           |    String link3 = "market://details?id=5";
           |  }
           |}""".trimMargin()))
-      .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
-      .run()
-      .expectClean()
+        .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
+        .run()
+        .expectClean()
   }
 
   @Test fun invalidSingleLineCommentIgnoresNoPmd() {
     lint()
-      .files(java("""
+        .files(java("""
           |package foo;
           |import android.content.res.Resources;
           |class Example {
@@ -151,14 +152,14 @@ class InvalidSingleLineCommentDetectorTest {
           |    // NOPMD
           |  }
           |}""".trimMargin()))
-      .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
-      .run()
-      .expectClean()
+        .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
+        .run()
+        .expectClean()
   }
 
   @Test fun invalidSingleLineCommentAllowsStartingDigit() {
     lint()
-      .files(java("""
+        .files(java("""
           |package foo;
           |import android.content.res.Resources;
           |class Example {
@@ -166,14 +167,14 @@ class InvalidSingleLineCommentDetectorTest {
           |    // 2 plus 4 equals 6.
           |  }
           |}""".trimMargin()))
-      .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
-      .run()
-      .expectClean()
+        .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
+        .run()
+        .expectClean()
   }
 
   @Test fun invalidSingleLineCommentIgnoresNoInspection() {
     lint()
-      .files(java("""
+        .files(java("""
           |package foo;
           |import android.content.res.Resources;
           |class Example {
@@ -181,14 +182,14 @@ class InvalidSingleLineCommentDetectorTest {
           |    //noinspection
           |  }
           |}""".trimMargin()))
-      .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
-      .run()
-      .expectClean()
+        .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
+        .run()
+        .expectClean()
   }
 
   @Test fun invalidSingleLineCommentLinkInComment() {
     lint()
-      .files(java("""
+        .files(java("""
           |package foo;
           |import android.content.res.Resources;
           |class Example {
@@ -196,14 +197,14 @@ class InvalidSingleLineCommentDetectorTest {
           |    // http://stackoverflow.com/a/38480079
           |  }
           |}""".trimMargin()))
-      .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
-      .run()
-      .expectClean()
+        .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
+        .run()
+        .expectClean()
   }
 
   @Test fun invalidSingleLineCommentIgnoresJustComment() {
     lint()
-      .files(java("""
+        .files(java("""
           |package foo;
           |import android.content.res.Resources;
           |class Example {
@@ -211,14 +212,14 @@ class InvalidSingleLineCommentDetectorTest {
           |    //
           |  }
           |}""".trimMargin()))
-      .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
-      .run()
-      .expectClean()
+        .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
+        .run()
+        .expectClean()
   }
 
   @Test fun invalidSingleLineCommentIgnoresJustCommentWithTrailingWhitespace() {
     lint()
-      .files(java("""
+        .files(java("""
           |package foo;
           |import android.content.res.Resources;
           |class Example {
@@ -226,14 +227,14 @@ class InvalidSingleLineCommentDetectorTest {
           |    //
           |  }
           |}""".trimMargin().replace("//", "// ")))
-      .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
-      .run()
-      .expect("""
+        .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
+        .run()
+        .expect("""
           |src/foo/Example.java:5: Warning: Comment contains trailing whitespace. [InvalidSingleLineComment]
           |    //
           |    ~~~
           |0 errors, 1 warnings""".trimMargin().replace("//", "// "))
-      .expectFixDiffs("""
+        .expectFixDiffs("""
           |Fix for src/foo/Example.java line 4: Remove trailing whitespace:
           |@@ -5 +5
           |-     //
@@ -243,7 +244,7 @@ class InvalidSingleLineCommentDetectorTest {
 
   @Test fun invalidSingleLineCommentTrailingWhitespace() {
     lint()
-      .files(java("""
+        .files(java("""
           |package foo;
           |import android.content.res.Resources;
           |class Example {
@@ -251,18 +252,41 @@ class InvalidSingleLineCommentDetectorTest {
           |    // Something.
           |  }
           |}""".trimMargin().replace("// Something.", "// Something. ")))
-      .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
-      .run()
-      .expect("""
+        .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
+        .run()
+        .expect("""
           |src/foo/Example.java:5: Warning: Comment contains trailing whitespace. [InvalidSingleLineComment]
           |    // Something.
           |    ~~~~~~~~~~~~~~
           |0 errors, 1 warnings""".trimMargin().replace("// Something.", "// Something. "))
-      .expectFixDiffs("""
+        .expectFixDiffs("""
           |Fix for src/foo/Example.java line 4: Remove trailing whitespace:
           |@@ -5 +5
           |-     // Something.
           |+     // Something.
           |""".trimMargin().replace("-     // Something.", "-     // Something. "))
+  }
+
+  @Test fun worksOnGradleFiles() {
+    lint()
+        .files(gradle("""
+          |buildscript {
+          |  repositories {
+          |    mavenCentral() // we need this.
+          |  }
+          |}""".trimMargin()))
+        .issues(ISSUE_INVALID_SINGLE_LINE_COMMENT)
+        .run()
+        .expect("""
+          |build.gradle:3: Warning: Comments first word should be capitalized. [InvalidSingleLineComment]
+          |    mavenCentral() // we need this.
+          |                      ^
+          |0 errors, 1 warnings""".trimMargin())
+        .expectFixDiffs("""
+          |Fix for build.gradle line 2: Capitalized first word:
+          |@@ -3 +3
+          |-     mavenCentral() // we need this.
+          |+     mavenCentral() // We need this.
+          |""".trimMargin())
   }
 }

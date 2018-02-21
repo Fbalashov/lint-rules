@@ -14,7 +14,7 @@ import org.w3c.dom.Attr
 val ISSUE_WRONG_VIEW_ID_FORMAT = Issue.create("WrongViewIdFormat",
     "Flag view ids that are not in lowerCamelCase Format.",
     "View ids should be in lowerCamelCase format. This has the benefit of saving an unnecessary underscore and also just looks nicer.",
-    CORRECTNESS, 8, WARNING,
+    CORRECTNESS, PRIORITY, WARNING,
     Implementation(WrongViewIdFormatDetector::class.java, RESOURCE_FILE_SCOPE))
 
 class WrongViewIdFormatDetector : LayoutDetector() {
@@ -23,10 +23,10 @@ class WrongViewIdFormatDetector : LayoutDetector() {
   override fun visitAttribute(context: XmlContext, attribute: Attr) {
     if (!LintUtils.stripIdPrefix(attribute.value).isLowerCamelCase()) {
       val fix = fix().replace()
-        .name("Convert to lowerCamelCase")
-        .text(attribute.value)
-        .with(attribute.value.idToSnakeCase())
-        .build()
+          .name("Convert to lowerCamelCase")
+          .text(attribute.value)
+          .with(attribute.value.idToSnakeCase())
+          .build()
 
       context.report(ISSUE_WRONG_VIEW_ID_FORMAT, attribute, context.getValueLocation(attribute), "Id is not in lowerCamelCaseFormat", fix)
     }
